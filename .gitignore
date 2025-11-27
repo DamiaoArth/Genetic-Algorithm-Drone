@@ -42,6 +42,7 @@ output/*.csv
 output/*.png
 output/*.json
 !output/.gitkeep
+!output/
 
 # Data files sensíveis (manter apenas exemplos)
 data/*.csv
@@ -49,6 +50,7 @@ data/*.json
 !data/exemplo_*.csv
 !data/exemplo_*.json
 !data/.gitkeep
+!data/
 
 # Pytest
 .pytest_cache/
