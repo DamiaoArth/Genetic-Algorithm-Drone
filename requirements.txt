@@ -1,0 +1,12 @@
+# UNIBRASIL Surveyor - Requisitos
+# Python 3.8+
+
+# Computação científica
+numpy>=1.21.0
+
+# Visualização
+matplotlib>=3.4.0
+
+# Opcional: testes
+pytest>=7.0.0
+pytest-cov>=3.0.0

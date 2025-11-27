@@ -1,0 +1,14 @@
+# Linux/Mac
+touch data/.gitkeep
+touch output/.gitkeep
+touch tests/.gitkeep
+
+# Windows (PowerShell)
+New-Item -ItemType File -Path "data\.gitkeep"
+New-Item -ItemType File -Path "output\.gitkeep"
+New-Item -ItemType File -Path "tests\.gitkeep"
+
+# Windows (CMD)
+type nul > data\.gitkeep
+type nul > output\.gitkeep
+type nul > tests\.gitkeep
