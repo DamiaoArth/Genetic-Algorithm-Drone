@@ -1,53 +1,57 @@
-# 🚀 Guia de Configuração Rápida - UNIBRASIL Surveyor
+# Quick Setup Guide – UNIBRASIL Surveyor
 
-## 📋 Pré-requisitos
+## Prerequisites
 
-- Python 3.8 ou superior
-- pip (gerenciador de pacotes)
-- Git (opcional)
+* Python 3.8 or higher
+* pip (package manager)
+* Git (optional)
 
 ---
 
-## 🔧 Instalação Passo a Passo
+## Step-by-Step Installation
 
-### **1. Criar Ambiente Virtual**
+### **1. Create a Virtual Environment**
 
 **Linux/Mac:**
+
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
 **Windows:**
+
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-### **2. Instalar Dependências**
+### **2. Install Dependencies**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Isso instalará:
-- `numpy` - Computação numérica
-- `matplotlib` - Visualizações
-- `pytest` (opcional) - Testes
+This will install:
 
-### **3. Verificar Instalação**
+* `numpy` – Numerical computation
+* `matplotlib` – Visualizations
+* `pytest` (optional) – Testing
+
+### **3. Verify Installation**
 
 ```bash
-python -c "import numpy, matplotlib; print('✓ Dependências OK!')"
+python -c "import numpy, matplotlib; print('✓ Dependencies OK!')"
 ```
 
 ---
 
-## 📁 Preparar Dados de Entrada
+## Prepare Input Data
 
-### **Arquivo Obrigatório: `data/coordenadas.csv`**
+### **Required File: `data/coordenadas.csv`**
 
-Formato:
+Format:
+
 ```csv
 cep,latitude,longitude
 82821020,-25.4524871,-49.2925963
@@ -55,14 +59,16 @@ cep,latitude,longitude
 ...
 ```
 
-**⚠️ IMPORTANTE:**
-- CEP da Unibrasil (`82821020`) **DEVE** estar presente
-- Sem espaços extras
-- Vírgula como separador
+**IMPORTANT:**
 
-### **Arquivo Opcional: `data/ventos.json`**
+* Unibrasil ZIP code (`82821020`) **MUST** be present
+* No extra spaces
+* Comma as separator
 
-Formato:
+### **Optional File: `data/ventos.json`**
+
+Format:
+
 ```json
 {
   "1": {
@@ -80,131 +86,125 @@ Formato:
 
 ---
 
-## ▶️ Executar o Sistema
+## Run the System
 
-### **Teste Rápido (10 gerações):**
+### **Quick Test (10 generations):**
+
 ```bash
 python main.py coordenadas.csv --gen 10 --pop 20
 ```
 
-### **Execução Padrão (200 gerações, sem ventos):**
+### **Default Execution (200 generations, no wind):**
+
 ```bash
 python main.py coordenadas.csv
 ```
 
-### **Execução Completa (COM ventos):**
+### **Full Execution (WITH wind):**
+
 ```bash
 python main.py coordenadas.csv --wind ventos.json --gen 200 --pop 150
 ```
 
-### **Execução Longa (melhor resultado):**
+### **Long Execution (best results):**
+
 ```bash
 python main.py coordenadas.csv --wind ventos.json --gen 500 --pop 300 --seed 42
 ```
 
 ---
 
-## 📊 Verificar Resultados
+## Check Results
 
-Após execução, você terá em `output/`:
+After execution, you will find in `output/`:
 
 ```
 output/
-├── rota_saida.csv              ← ARQUIVO PARA ENTREGAR
-├── distribuicao_ventos.png     ← Gráfico dos ventos
-├── mapa_rota.png               ← Mapa da rota
-└── estatisticas_rota.png       ← Estatísticas detalhadas
+├── rota_saida.csv              ← FILE TO SUBMIT
+├── distribuicao_ventos.png     ← Wind distribution chart
+├── mapa_rota.png               ← Route map
+└── estatisticas_rota.png       ← Detailed statistics
 ```
 
 ---
 
-## ✅ Checklist de Validação
+## Validation Checklist
 
-Execute ANTES de entregar:
+Run BEFORE submitting:
 
 ```bash
-# 1. Arquivos de dados presentes?
+# 1. Data files present?
 ls -la data/
-# Deve mostrar: coordenadas.csv, ventos.json (opcional)
+# Should show: coordenadas.csv, ventos.json (optional)
 
-# 2. Ambiente virtual ativo?
+# 2. Virtual environment active?
 which python
-# Deve mostrar: .../venv/bin/python ou ...\venv\Scripts\python
+# Should show: .../venv/bin/python or ...\venv\Scripts\python
 
-# 3. Execução completa sem erros?
+# 3. Full execution without errors?
 python main.py coordenadas.csv --wind ventos.json --gen 100 --pop 100
 
-# 4. Arquivos de saída gerados?
+# 4. Output files generated?
 ls -la output/
-# Deve mostrar: 4 arquivos (.csv + 3 .png)
+# Should show: 4 files (.csv + 3 .png)
 
-# 5. Validação passou?
-# Veja no terminal:
-# ✅ VALIDAÇÃO DOS REQUISITOS:
-#    • Rota Fechada (Início/Fim Unibrasil): ✔ OK
-#    • Todos os CEPs Visitados: ✔ OK
-#    • Dentro do Prazo (7 dias): ✔ OK
-#    • Velocidades Válidas (36-96, múltiplo 4): ✔ OK
-#    • Horários Válidos (6h-19h): ✔ OK
+# 5. Validation passed?
+# See in terminal:
+#  REQUIREMENTS VALIDATION:
+#    • Closed Route (Start/End Unibrasil): ✔ OK
+#    • All ZIP Codes Visited: ✔ OK
+#    • Within Deadline (7 days): ✔ OK
+#    • Valid Speeds (36–96, multiple of 4): ✔ OK
+#    • Valid Time Window (6 a.m.–7 p.m.): ✔ OK
 ```
 
 ---
 
-## ⚠️ Problemas Comuns
+## Common Issues
 
 ### **"ModuleNotFoundError: No module named 'core'"**
-**Causa:** Executando do diretório errado  
-**Solução:**
+
+**Cause:** Running from the wrong directory
+**Solution:**
+
 ```bash
-cd unibrasil-surveyor/  # Ir para raiz do projeto
+cd unibrasil-surveyor/  # Go to project root
 python main.py coordenadas.csv
 ```
 
 ### **"FileNotFoundError: coordenadas.csv"**
-**Causa:** Arquivo não está em `data/`  
-**Solução:**
+
+**Cause:** File is not in `data/`
+**Solution:**
+
 ```bash
-ls data/  # Verificar conteúdo
-# Se vazio, adicione o arquivo:
-cp /seu/caminho/coordenadas.csv data/
+ls data/  # Check contents
+# If empty, add the file:
+cp /your/path/coordenadas.csv data/
 ```
 
-### **Convergência fraca (<5% em 20 gerações)**
-**Causa:** Parâmetros insuficientes  
-**Solução:**
+### **Poor convergence (<5% in 20 generations)**
+
+**Cause:** Insufficient parameters
+**Solution:**
+
 ```bash
 python main.py coordenadas.csv --gen 400 --pop 250
 ```
 
 ### **"ImportError: cannot import name 'gerar_todos_graficos'"**
-**Causa:** `main.py` com import errado  
-**Solução:** Use o `main.py` corrigido fornecido
+
+**Cause:** Incorrect import in `main.py`
+**Solution:** Use the corrected `main.py` provided
 
 ---
 
-## 📞 Suporte
+## **Author**
 
-**Autores:**
-- Arthur Damiao Mendes (2023102413)
-- Gabryel Zanella (2023100930)
-- Luiz Felipe (2023201245)
-
-**Disciplina:** Serviços Cognitivos  
-**Professor:** Mozart Hasse  
-**Instituição:** Unibrasil
+* Arthur Damiao Mendes
 
 ---
 
-## 🎯 Próximos Passos
-
-1. ✅ Ambiente configurado
-2. ✅ Dependências instaladas
-3. ⚠️ **VOCÊ ESTÁ AQUI** - Adicionar arquivos de dados
-4. ⬜ Executar testes
-5. ⬜ Executar sistema completo
-6. ⬜ Validar resultados
-7. ⬜ Entregar `rota_saida.csv`
-
-**Versão:** 3.0.2  
-**Data:** 2025  
-**Status:** ✅ Pronto para uso
+**Version:** 1.3.2
+**Year:** 2025
+**Status:** ✅ Ready for use
