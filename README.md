@@ -1,60 +1,57 @@
-# 🚁 UNIBRASIL Surveyor
+# UNIBRASIL Surveyor
 
-Sistema de otimização de rotas para drone autônomo usando Algoritmo Genético.
+Route optimization system for an autonomous drone using a Genetic Algorithm.
 
-## 📋 Descrição do Projeto
+## Project Description
 
-O UNIBRASIL Surveyor é um sistema desenvolvido para planejar rotas otimizadas de um drone autônomo que deve fotografar diversos CEPs na cidade de Curitiba. O objetivo é **minimizar o custo total**, medido pelo tempo de voo e quantidade de paradas para recarga.
-
-**Disciplina:** Serviços Cognitivos  
-**Professor:** Mozart Hasse  
-**Instituição:** Unibrasil
+UNIBRASIL Surveyor is a system designed to plan optimized routes for an autonomous drone that must photograph multiple ZIP codes (CEPs) in the city of Curitiba. The goal is to **minimize total cost**, measured by flight time and the number of recharging stops.
 
 ---
 
-## 🎯 Objetivos do Sistema
+## System Objectives
 
-1. **Minimizar tempo total de voo**
-2. **Minimizar número de recargas**
-3. **Respeitar todas as restrições operacionais**:
-   - Autonomia da bateria
-   - Janela de operação (6h-19h)
-   - Prazo de 7 dias
-   - Efeito dos ventos
-   - Velocidades válidas
+1. **Minimize total flight time**
+2. **Minimize the number of recharges**
+3. **Respect all operational constraints**:
+
+   * Battery autonomy
+   * Operating time window (6 a.m.–7 p.m.)
+   * 7-day deadline
+   * Wind effects
+   * Valid speed limits
 
 ---
 
-## 📁 Estrutura do Projeto
+## Project Structure
 
 ```
 unibrasil-surveyor/
-├── main.py                     # Script principal de execução
-├── requirements.txt            # Dependências Python
-├── README.md                   # Esta documentação
-├── .gitignore                  # Arquivos ignorados pelo Git
+├── main.py                     # Main execution script
+├── requirements.txt            # Python dependencies
+├── README.md                   # This documentation
+├── .gitignore                  # Git ignored files
 │
-├── data/                       # Arquivos de entrada
-│   ├── coordenadas.csv         # CEPs e coordenadas (fornecido pelo professor)
-│   └── ventos.json             # Previsão de ventos (7 dias)
+├── data/                       # Input files
+│   ├── coordenadas.csv         # ZIP codes and coordinates (provided by professor)
+│   └── ventos.json             # Wind forecast (7 days)
 │
-├── core/                       # Código fonte principal
+├── core/                       # Main source code
 │   ├── __init__.py
-│   ├── config.py               # Configurações e parâmetros
-│   ├── data_loader.py          # Carregamento de dados
-│   ├── physics.py              # Física do drone (aceleração, vento)
-│   ├── simulation.py           # Simulação de rotas e fitness
-│   ├── genetic_algorithm.py    # Algoritmo Genético
-│   └── visualizacao.py         # Geração de gráficos
+│   ├── config.py               # Configuration and parameters
+│   ├── data_loader.py          # Data loading
+│   ├── physics.py              # Drone physics (acceleration, wind)
+│   ├── simulation.py           # Route simulation and fitness
+│   ├── genetic_algorithm.py    # Genetic Algorithm
+│   └── visualizacao.py         # Chart generation
 │
-├── output/                     # Arquivos gerados
-│   ├── rota_saida.csv          # Solução encontrada
-│   ├── distribuicao_ventos.png # Gráfico dos ventos
-│   ├── mapa_rota.png           # Mapa da rota
-│   ├── estatisticas_rota.png   # Estatísticas
-│   └── monitoramento_*.png     # Evolução do AG
+├── output/                     # Generated files
+│   ├── rota_saida.csv          # Final solution
+│   ├── distribuicao_ventos.png # Wind distribution chart
+│   ├── mapa_rota.png           # Route map
+│   ├── estatisticas_rota.png   # Statistics
+│   └── monitoramento_*.png     # GA evolution
 │
-└── tests/                      # Testes unitários
+└── tests/                      # Unit tests
     ├── __init__.py
     ├── test_data_loader.py
     ├── test_simulation.py
@@ -63,54 +60,57 @@ unibrasil-surveyor/
 
 ---
 
-## 🚀 Instalação e Execução
+## Installation and Execution
 
-### **Pré-requisitos**
+### **Prerequisites**
 
-- Python 3.8 ou superior
-- pip (gerenciador de pacotes Python)
+* Python 3.8 or higher
+* pip (Python package manager)
 
-### **1. Clonar/Extrair o Projeto**
+### **1. Clone / Extract the Project**
 
 ```bash
-# Se estiver em um repositório Git:
-git clone <url-do-repositorio>
+# If using a Git repository:
+git clone <repository-url>
 cd unibrasil-surveyor
 
-# Ou extrair o ZIP fornecido
+# Or extract the provided ZIP
 unzip unibrasil-surveyor.zip
 cd unibrasil-surveyor
 ```
 
-### **2. Instalar Dependências**
+### **2. Install Dependencies**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### **3. Preparar Dados de Entrada**
+### **3. Prepare Input Data**
 
-Certifique-se de que os arquivos estão no diretório `data/`:
+Ensure the files are located in the `data/` directory:
 
 ```
 data/
-├── coordenadas.csv    # CEPs e coordenadas (obrigatório)
-└── ventos.json        # Previsão de ventos (opcional)
+├── coordenadas.csv    # ZIP codes and coordinates (required)
+└── ventos.json        # Wind forecast (optional)
 ```
 
-### **4. Executar o Sistema**
+### **4. Run the System**
 
-**Execução básica (sem ventos):**
+**Basic execution (no wind):**
+
 ```bash
 python main.py coordenadas.csv
 ```
 
-**Execução completa (com ventos):**
+**Full execution (with wind):**
+
 ```bash
 python main.py coordenadas.csv --wind ventos.json
 ```
 
-**Execução com parâmetros customizados:**
+**Execution with custom parameters:**
+
 ```bash
 python main.py coordenadas.csv \
     --wind ventos.json \
@@ -120,326 +120,189 @@ python main.py coordenadas.csv \
     --out rota_final.csv
 ```
 
-### **5. Parâmetros Disponíveis**
+### **5. Available Parameters**
 
-| Parâmetro | Descrição | Padrão |
-|-----------|-----------|--------|
-| `arquivo` | Arquivo CSV com CEPs (obrigatório) | - |
-| `--wind` | Arquivo JSON com ventos | `ventos.json` |
-| `--pop` | Tamanho da população | `150` |
-| `--gen` | Número de gerações | `200` |
-| `--seed` | Seed para reprodutibilidade | Aleatória |
-| `--out` | Nome do arquivo de saída | `rota_saida.csv` |
+| Parameter | Description                        | Default          |
+| --------- | ---------------------------------- | ---------------- |
+| `arquivo` | CSV file with ZIP codes (required) | –                |
+| `--wind`  | JSON file with wind data           | `ventos.json`    |
+| `--pop`   | Population size                    | `150`            |
+| `--gen`   | Number of generations              | `200`            |
+| `--seed`  | Seed for reproducibility           | Random           |
+| `--out`   | Output file name                   | `rota_saida.csv` |
 
-**Exemplos:**
+**Examples:**
 
 ```bash
-# Teste rápido (10 gerações, população pequena)
+# Quick test (10 generations, small population)
 python main.py coordenadas.csv --gen 10 --pop 20
 
-# Execução com seed fixa (reproduzível)
+# Execution with fixed seed (reproducible)
 python main.py coordenadas.csv --seed 42
 
-# Execução longa para melhor resultado
+# Long execution for best results
 python main.py coordenadas.csv --gen 500 --pop 300
 ```
 
 ---
 
-## 📊 Saídas Geradas
+## Generated Outputs
 
-Todos os arquivos são salvos no diretório `output/`:
+All files are saved in the `output/` directory:
 
 ### **1. rota_saida.csv**
-Arquivo CSV com a rota detalhada. Formato:
+
+CSV file with the detailed route. Format:
 
 ```csv
 cep_inicial,lat_inicial,lon_inicial,dia,hora_inicial,velocidade,cep_final,lat_final,lon_final,pouso,hora_final
-82821020,-25.4524871,-49.2925963,1,06:00:00,72,80050370,-25.4376831,-49.2729254,NÃO,06:12:34
+82821020,-25.4524871,-49.2925963,1,06:00:00,72,80050370,-25.4376831,-49.2729254,NO,06:12:34
 ...
 ```
 
-### **2. Gráficos de Visualização**
+### **2. Visualization Charts**
 
-- **distribuicao_ventos.png**: Velocidade e direção dos ventos por dia
-- **mapa_rota.png**: Mapa da rota (latitude × longitude)
-- **estatisticas_rota.png**: Estatísticas detalhadas (pousos, velocidades, etc.)
-- **monitoramento_completo.png**: Evolução do fitness ao longo das gerações
+* **distribuicao_ventos.png**: Wind speed and direction by day
+* **mapa_rota.png**: Route map (latitude × longitude)
+* **estatisticas_rota.png**: Detailed statistics (landings, speeds, etc.)
+* **monitoramento_completo.png**: Fitness evolution across generations
 
 ---
 
-## ⚙️ Configuração do Sistema
+## System Configuration
 
-### **Parâmetros do Drone (config.py)**
+### **Drone Parameters (`config.py`)**
 
 ```python
 VELOCIDADE_MAXIMA = 96        # km/h
 VELOCIDADE_MINIMA = 36        # km/h (10 m/s)
-AUTONOMIA_BASE_SEG = 4650.0   # ~77.5 minutos (fator Curitiba: 0.93)
-TEMPO_PARADA_SEG = 72         # 1min 12s por parada
-TEMPO_RECARGA_SEG = 3600      # 1 hora
+AUTONOMIA_BASE_SEG = 4650.0   # ~77.5 minutes (Curitiba factor: 0.93)
+TEMPO_PARADA_SEG = 72         # 1 min 12 s per stop
+TEMPO_RECARGA_SEG = 3600      # 1 hour
 ```
 
-### **Parâmetros do Algoritmo Genético**
+### **Genetic Algorithm Parameters**
 
 ```python
-POP_SIZE = 150                # Tamanho da população
-CROSSOVER_RATE = 0.85         # Taxa de crossover
-MUTATION_RATE_SWAP = 0.12     # Taxa de mutação (swap)
-MUTATION_RATE_INVERSION = 0.08  # Taxa de mutação (inversion)
-MUTATION_RATE_2OPT = 0.05     # Taxa de mutação (2-opt)
-ELITISM_COUNT = 5             # Número de elites preservadas
-TOURNAMENT_SIZE = 3           # Tamanho do torneio
+POP_SIZE = 150
+CROSSOVER_RATE = 0.85
+MUTATION_RATE_SWAP = 0.12
+MUTATION_RATE_INVERSION = 0.08
+MUTATION_RATE_2OPT = 0.05
+ELITISM_COUNT = 5
+TOURNAMENT_SIZE = 3
 ```
 
-### **Função Fitness (Hierarquia Lexicográfica)**
+### **Fitness Function (Lexicographic Hierarchy)**
 
 ```python
-FITNESS = Distância × 1.000.000    # Fator dominante (~87%)
-        + Pousos × 1.000           # Desempate médio (~1%)
-        + Tempo × 1                # Desempate fino (~9%)
-        + Penalidades              # Violações graves (~3%)
+FITNESS = Distance × 1_000_000   # Dominant factor (~87%)
+        + Landings × 1_000       # Medium tie-break (~1%)
+        + Time × 1               # Fine tie-break (~9%)
+        + Penalties              # Severe violations (~3%)
 ```
 
-**Exemplo:**
-- 100m de distância = 100.000 pontos
-- 1 pouso = 1.000 pontos
-- 1.000 segundos = 1.000 pontos
-
-**Garantia:** 100m > 50 pousos + 200.000 segundos
+**Guarantee:** 100 m of distance > 50 landings + 200,000 seconds
 
 ---
 
-## 🧬 Algoritmo Genético
+## Genetic Algorithm
 
-### **Representação**
+### **Representation**
 
-- **Cromossomo:** Permutação dos CEPs + vetor de velocidades
-- **Rota:** [base, cep1, cep2, ..., cepN, base]
-- **Velocidades:** [v1, v2, ..., vN+1] (em km/h, múltiplos de 4)
+* **Chromosome:** ZIP code permutation + speed vector
+* **Route:** [base, zip1, zip2, ..., zipN, base]
+* **Speeds:** [v1, v2, ..., vN+1] (km/h, multiples of 4)
 
-### **Operadores**
+### **Operators**
 
-1. **Seleção:** Torneio (k=3)
-2. **Crossover:** Order Crossover (OX) - preserva ordem
-3. **Mutação:** 
-   - Swap (troca 2 posições)
-   - Inversion (inverte subsegmento)
-   - 2-opt (remove cruzamentos)
-4. **Elitismo:** Mantém 5 melhores indivíduos
+1. **Selection:** Tournament (k = 3)
+2. **Crossover:** Order Crossover (OX)
+3. **Mutation:**
 
-### **Anti-Estagnação**
+   * Swap
+   * Inversion
+   * 2-opt
+4. **Elitism:** Preserves top 5 individuals
 
-- Detecção a cada 20 gerações
-- Restart parcial (30% novos indivíduos)
-- Hiper-mutação (taxa 40%)
-- Local search 2-opt nos melhores
+### **Anti-Stagnation Strategy**
 
----
-
-## 🌬️ Consideração de Ventos
-
-O sistema considera os efeitos do vento conforme especificação:
-
-### **Efeito na Velocidade**
-
-```
-velocidade_efetiva = velocidade_drone + componente_vento
-
-componente_vento = vento × cos(ângulo_relativo)
-```
-
-- **Vento a favor** (0°): aumenta velocidade
-- **Vento contrário** (180°): reduz velocidade
-- **Vento lateral** (90°): sem efeito direto
-
-### **Formato do arquivo ventos.json**
-
-```json
-{
-  "1": {
-    "6": {"velocidade_kmh": 9.0, "direcao_graus": 157.5},
-    "9": {"velocidade_kmh": 11.0, "direcao_graus": 180.0},
-    "12": {"velocidade_kmh": 15.0, "direcao_graus": 202.5},
-    "15": {"velocidade_kmh": 17.0, "direcao_graus": 225.0},
-    "18": {"velocidade_kmh": 13.0, "direcao_graus": 202.5}
-  },
-  "2": { ... },
-  ...
-  "7": { ... }
-}
-```
+* Detection every 20 generations
+* Partial restart (30% new individuals)
+* Hyper-mutation (40% rate)
+* Local 2-opt search on elites
 
 ---
 
-## ✅ Validação da Solução
+## Wind Consideration
 
-O sistema valida automaticamente:
+### **Effect on Speed**
 
-1. ✓ Rota fechada (inicia e termina na Unibrasil)
-2. ✓ Todos os CEPs visitados exatamente uma vez
-3. ✓ Dentro do prazo (7 dias)
-4. ✓ Velocidades válidas (36-96 km/h, múltiplos de 4)
-5. ✓ Horários válidos (6h-19h)
-6. ✓ Autonomia respeitada (pousos quando necessário)
-
-**Output da validação:**
 ```
-✅ VALIDAÇÃO DOS REQUISITOS:
-   • Rota Fechada (Início/Fim Unibrasil): ✓ OK
-   • Todos os CEPs Visitados: ✓ OK
-   • Dentro do Prazo (7 dias): ✓ OK
-   • Velocidades Válidas (36-96, múltiplo 4): ✓ OK
-   • Horários Válidos (6h-19h): ✓ OK
+effective_speed = drone_speed + wind_component
+
+wind_component = wind_speed × cos(relative_angle)
 ```
+
+* **Tailwind (0°):** increases speed
+* **Headwind (180°):** reduces speed
+* **Crosswind (90°):** no direct effect
 
 ---
 
-## 🧪 Testes
+## Solution Validation
 
-### **Executar Testes Unitários**
+The system automatically validates:
+
+1. ✓ Closed route (starts and ends at Unibrasil)
+2. ✓ All ZIP codes visited exactly once
+3. ✓ Within the 7-day deadline
+4. ✓ Valid speeds (36–96 km/h, multiple of 4)
+5. ✓ Valid operating hours (6 a.m.–7 p.m.)
+6. ✓ Battery autonomy respected
+
+---
+
+## Tests
 
 ```bash
-# Instalar pytest
-pip install pytest pytest-cov
-
-# Executar todos os testes
 pytest tests/
-
-# Executar com cobertura
 pytest --cov=core tests/
-
-# Executar teste específico
 pytest tests/test_simulation.py -v
 ```
 
-### **Estrutura dos Testes**
-
-```
-tests/
-├── test_data_loader.py      # Testa carregamento de dados
-├── test_simulation.py       # Testa simulação e fitness
-└── test_genetic_algorithm.py # Testa operadores do AG
-```
-
 ---
 
-## 📈 Interpretação dos Resultados
+## Result Interpretation
 
 ### **Fitness**
 
-- **Fitness < 50.000.000** (para ~50 CEPs): Excelente
-- **Fitness < 60.000.000**: Bom
-- **Fitness > 70.000.000**: Revisar parâmetros
-
-### **Convergência**
-
-- **Melhoria > 10% em 20 gerações**: Excelente
-- **Melhoria 5-10% em 20 gerações**: Razoável
-- **Melhoria < 5% em 20 gerações**: Problema detectado
-
-### **Métricas Típicas (50 CEPs)**
-
-- Distância: 40-55 km
-- Tempo: 20-30 horas
-- Pousos: 5-12
-- Dias: 2-4
+* **< 50,000,000** (≈50 ZIPs): Excellent
+* **< 60,000,000**: Good
+* **> 70,000,000**: Review parameters
 
 ---
 
-## 🐛 Troubleshooting
+## References
 
-### **Erro: "Arquivo não encontrado"**
-
-**Solução:** Certifique-se de que os arquivos estão em `data/`:
-```bash
-ls -la data/
-# Deve mostrar: coordenadas.csv e ventos.json
-```
-
-### **Erro: "No module named 'core'"**
-
-**Solução:** Execute a partir do diretório raiz do projeto:
-```bash
-cd unibrasil-surveyor
-python main.py coordenadas.csv
-```
-
-### **Convergência fraca (< 5% em 20 gerações)**
-
-**Solução:** Ajustar parâmetros:
-```bash
-# Aumentar população e gerações
-python main.py coordenadas.csv --gen 400 --pop 250
-
-# Testar com seed diferente
-python main.py coordenadas.csv --seed 123
-```
-
-### **Muitas soluções inviáveis**
-
-**Causa:** Autonomia insuficiente para os dados  
-**Solução:** Verificar se `AUTONOMIA_BASE_SEG` está correto (4650s)
+1. Goldberg, D. E. (1989). *Genetic Algorithms in Search, Optimization, and Machine Learning.*
+2. Laporte, G. (1992). *The Traveling Salesman Problem.*
+3. Vincenty, T. (1975). *Geodesics on the Ellipsoid.*
 
 ---
 
-## 🔬 Detalhes Técnicos
+## Authors
 
-### **Física do Drone**
-
-- **Aceleração:** 2.0 m/s²
-- **Desaceleração:** 3.0 m/s²
-- **Consumo:** Proporcional à velocidade^1.5
-- **Velocidade de referência:** 36 km/h (mais eficiente)
-
-### **Simulação em Duas Camadas**
-
-1. **Rápida (fitness):** Estimativa sem física detalhada (10-20× mais rápido)
-2. **Detalhada (CSV):** Física completa apenas na solução final
-
-### **Escala Lexicográfica**
-
-Garante que distância sempre domina:
-```
-100m de distância = 100.000 pontos
-> 50 pousos (50.000 pontos) + 200.000s (200.000 pontos)
-```
+* Arthur Damiao Mendes
 
 ---
 
-## 📚 Referências
+## License
 
-1. **Algoritmos Genéticos:** Goldberg, D. E. (1989). Genetic Algorithms in Search, Optimization, and Machine Learning.
-2. **TSP:** Laporte, G. (1992). The traveling salesman problem: An overview of exact and approximate algorithms.
-3. **Haversine:** Vincenty, T. (1975). Direct and inverse solutions of geodesics on the ellipsoid.
+This project is part of an academic assignment for the Cognitive Services course at Unibrasil.
 
 ---
 
-## 👥 Autores
-
-- Arthur Damiao Mendes (matricula: 2023102413)
-- Gabryel Zanella (matricula: 2023100930)
-- Luiz Felipe (matricula: 2023201245)
-
----
-
-## 📄 Licença
-
-Este projeto é parte de uma atividade acadêmica da disciplina de Serviços Cognitivos da Unibrasil.
-
----
-
-## 📞 Suporte
-
-Em caso de dúvidas ou problemas:
-
-1. Verifique esta documentação completa
-2. Consulte os comentários no código
-3. Execute os testes unitários
-4. Entre em contato com o professor
-
----
-
-**Versão:** 3.0.2  
-**Data:** 2025  
-**Status:** ✅ Pronto para entrega
+**Version:** 1.3.2
+**Year:** 2025
+**Status:** ✅ Ready for use
